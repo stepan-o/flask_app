@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "flask>=3.0",
+    "gunicorn>=22.0",
 ]
 
 [build-system]
@@ -15,6 +16,10 @@ build-backend = "setuptools.build_meta"
 [tool.uv]
 # uv will automatically use the local .venv and pyproject for dependency resolution
 
+[tool.uv.scripts]
+# Convenience commands for running the app with Gunicorn
+serve = "gunicorn -c gunicorn.conf.py wsgi:app"
+serve-dev = "gunicorn --reload --bind 127.0.0.1:8000 wsgi:app"
 
 [tool.setuptools.packages.find]
 # Only include the actual application package; exclude the instance config directory
