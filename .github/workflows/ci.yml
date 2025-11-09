@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+
+      - name: Sync dependencies
+        run: uv sync
+
+      - name: Lint (pre-commit)
+        run: |
+          uvx pre-commit install-hooks
+          uvx pre-commit run --all-files --show-diff-on-failure
+
+      - name: Smoke test - import app and create Flask instance
+        env:
+          PYTHONWARNINGS: default
+        run: |
+          uv run python - << 'PY'
+          from app import create_app
+          app = create_app()
+          print('App name:', app.name)
+          print('URL map:', app.url_map)
+          PY
+
+      - name: Gunicorn config sanity check
+        run: |
+          # Ensure gunicorn is importable and config loads
+          uv run python - << 'PY'
+          import importlib.util, sys
+          import gunicorn
+          spec = importlib.util.spec_from_file_location('gconf', 'gunicorn.conf.py')
+          mod = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(mod)
+          print('gunicorn version:', gunicorn.__version__)
+          print('bind:', getattr(mod, 'bind', None))
+          PY
