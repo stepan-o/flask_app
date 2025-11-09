@@ -1,0 +1,2 @@
+# Ignore instance-specific configuration that may contain secrets
+config.py
