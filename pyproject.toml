@@ -1,0 +1,22 @@
+[project]
+name = "flask-app"
+version = "0.1.0"
+description = "Basic Flask app scaffold"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "flask>=3.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.uv]
+# uv will automatically use the local .venv and pyproject for dependency resolution
+
+
+[tool.setuptools.packages.find]
+# Only include the actual application package; exclude the instance config directory
+include = ["app*"]
+exclude = ["instance*"]

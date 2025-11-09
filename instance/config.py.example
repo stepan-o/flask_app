@@ -1,0 +1,6 @@
+# This file contains instance-specific configuration overrides.
+# Copy it to instance/config.py and edit values as needed.
+
+SECRET_KEY = "change-me-in-production"
+# Example: set a database URI or other secrets
+# SQLALCHEMY_DATABASE_URI = "sqlite:///app.db"
