@@ -13,6 +13,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Repo hygiene check
+        run: |
+          set -e
+          # Ensure secrets are not committed
+          if git ls-files --error-unmatch instance/config.py >/dev/null 2>&1; then
+            echo "Error: instance/config.py is tracked in Git. This file must not be committed." >&2
+            exit 1
+          fi
+          # Ensure build artifacts are not tracked
+          if git ls-files | grep -E "\\.egg-info/" >/dev/null 2>&1; then
+            echo "Error: *.egg-info directories are tracked in Git. Remove them from the index and rely on .gitignore." >&2
+            exit 1
+          fi
+
       - name: Set up uv
         uses: astral-sh/setup-uv@v4
         with:
