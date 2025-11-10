@@ -34,15 +34,18 @@ class Config:
 
 class DevelopmentConfig(Config):
     """Settings tailored for local development."""
+
     DEBUG = True
 
 
 class TestingConfig(Config):
     """Settings used by test runs (pytest, etc.)."""
+
     TESTING = True
     DEBUG = True
 
 
 class ProductionConfig(Config):
     """Production-safe defaults (debug off)."""
+
     DEBUG = False

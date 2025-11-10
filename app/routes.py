@@ -31,7 +31,4 @@ def health():
     Using `jsonify` ensures a proper `application/json` response with the
     appropriate status code (200 by default) and charset.
     """
-    return jsonify({
-        "message": "Hello, Flask!",
-        "status": "ok"
-    })
+    return jsonify({"message": "Hello, Flask!", "status": "ok"})

@@ -16,6 +16,7 @@ Run examples:
     uv run gunicorn -c gunicorn.conf.py wsgi:app
     uv run -s serve        # uses [tool.uv.scripts] alias
 """
+
 from __future__ import annotations
 
 import multiprocessing
