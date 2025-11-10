@@ -56,7 +56,6 @@ source = { editable = "." }
 dependencies = [
     { name = "flask" },
     { name = "gunicorn" },
-    { name = "load-dotenv" },
     { name = "python-dotenv" },
 ]
 
@@ -64,7 +63,6 @@ dependencies = [
 requires-dist = [
     { name = "flask", specifier = ">=3.0" },
     { name = "gunicorn", specifier = ">=22.0" },
-    { name = "load-dotenv", specifier = ">=0.1.0" },
     { name = "python-dotenv", specifier = ">=1.0" },
 ]
 
@@ -99,18 +97,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/df/bf/f7da0350254c0ed7c72f3e33cef02e048281fec7ecec5f032d4aac52226b/jinja2-3.1.6.tar.gz", hash = "sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d", size = 245115, upload-time = "2025-03-05T20:05:02.478Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl", hash = "sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67", size = 134899, upload-time = "2025-03-05T20:05:00.369Z" },
-]
-
-[[package]]
-name = "load-dotenv"
-version = "0.1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "python-dotenv" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/d7/95/055d123dde74bd54b99b27a3c2d8c6e218f544e0bd437480f61ccf85a07f/load-dotenv-0.1.0.tar.gz", hash = "sha256:bbe5f40072d4a61eadca66de6c222df5a2d935d6d41b703be1ff75396f635145", size = 6404, upload-time = "2022-09-02T19:55:01.349Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/14/2e/268a528dfa1f76999435634b0453fdd917ea878a818a6d5981632f7acffb/load_dotenv-0.1.0-py3-none-any.whl", hash = "sha256:614803f720153fb8a5f97124a72aaa3930a67aa5547cbe8603d01ea7f9ac1adf", size = 7175, upload-time = "2022-09-02T19:54:59.85Z" },
 ]
 
 [[package]]
