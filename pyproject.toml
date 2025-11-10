@@ -7,6 +7,8 @@ requires-python = ">=3.11"
 dependencies = [
     "flask>=3.0",
     "gunicorn>=22.0",
+    "load-dotenv>=0.1.0",
+    "python-dotenv>=1.0",
 ]
 
 [build-system]
@@ -25,3 +27,9 @@ serve-dev = "gunicorn --reload --bind 127.0.0.1:8000 wsgi:app"
 # Only include the actual application package; exclude the instance config directory
 include = ["app*"]
 exclude = ["instance*"]
+
+[tool.ruff]
+# Enforce rules against broad exception clauses and bare excepts.
+# - BLE001: Do not catch blind/broad exceptions (from flake8-blind-except)
+# - E722: Do not use bare 'except'
+extend-select = ["BLE", "E722"]
