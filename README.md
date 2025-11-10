@@ -30,7 +30,7 @@ JSON health: http://127.0.0.1:5000/api/health
 
 Tip: For production‑like serving locally:
 ```bash
-uv run -s serve   # gunicorn -c gunicorn.conf.py wsgi:app
+uv run gunicorn -c gunicorn.conf.py wsgi:app
 ```
 
 ## Project layout
@@ -113,17 +113,15 @@ If you specifically need the interpreter inside `.venv`, run it directly or pin 
 Already included:
 - `wsgi.py` exposing `app`
 - `gunicorn` dependency and `gunicorn.conf.py`
-- uv script aliases (`serve`, `serve-dev`)
 
 Quick start:
 ```bash
 uv sync
-uv run -s serve
-# ≈ uv run gunicorn -c gunicorn.conf.py wsgi:app
+uv run gunicorn -c gunicorn.conf.py wsgi:app
 ```
 Dev auto‑reload (not for prod):
 ```bash
-uv run -s serve-dev
+uv run gunicorn --reload --bind 127.0.0.1:8000 wsgi:app
 ```
 Tuning via env (or `.env` locally):
 ```bash
@@ -132,7 +130,7 @@ export GUNICORN_WORKERS=5
 export GUNICORN_THREADS=2
 export GUNICORN_TIMEOUT=60
 export GUNICORN_LOGLEVEL=info
-uv run -s serve
+uv run gunicorn -c gunicorn.conf.py wsgi:app
 ```
 Windows: Gunicorn targets UNIX; use WSL or an alternative like Waitress.
 

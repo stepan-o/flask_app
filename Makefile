@@ -45,10 +45,10 @@ flask-run: ## Start development server via Flask CLI (factory pattern)
 	FLASK_APP=$(FLASK_APP) $(UV) run flask run --debug --host $(word 1,$(subst :, ,$(BIND))) --port $(word 2,$(subst :, ,$(BIND)))
 
 serve: ## Run with Gunicorn using gunicorn.conf.py (production-like)
-	$(UV) run -s serve
+	$(UV) run gunicorn -c gunicorn.conf.py wsgi:app
 
 serve-dev: ## Run Gunicorn with auto-reload for development
-	$(UV) run -s serve-dev
+	$(UV) run gunicorn --reload --bind 127.0.0.1:8000 wsgi:app
 
 routes: ## List Flask routes (requires FLASK_APP)
 	FLASK_APP=$(FLASK_APP) $(UV) run flask routes
