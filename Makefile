@@ -23,7 +23,7 @@ PY ?= python
 UV := uv
 
 .DEFAULT_GOAL := help
-.PHONY: help venv sync add run flask-run serve serve-dev routes shell check-venv where-flask pip-show clean
+.PHONY: help venv sync add run flask-run serve serve-dev routes shell check-venv where-flask pip-show clean env
 
 help: ## Show this help
 	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z0-9_.-]+:.*##/ {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -67,3 +67,6 @@ pip-show: ## Show pip version and install location
 
 clean: ## Remove Python caches and common artifacts
 	rm -rf __pycache__ */__pycache__ .pytest_cache .coverage .coverage.* htmlcov build dist *.egg-info
+
+env: ## Create .env from .env.example if missing
+	@if [ ! -f .env ]; then cp .env.example .env && echo "Created .env from .env.example"; else echo ".env already exists"; fi
