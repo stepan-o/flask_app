@@ -1,0 +1,44 @@
+name: Auto Format
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  autofix:
+    if: github.actor != 'github-actions[bot]' && ! contains(github.event.head_commit.message, '[skip format]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
+
+      - name: Sync dependencies
+        run: uv sync
+
+      - name: Run pre-commit (auto-fix)
+        run: |
+          uvx pre-commit install-hooks
+          uvx pre-commit run --all-files || true
+
+      - name: Commit and push changes if any
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "chore(format): auto-apply pre-commit fixes [autoformat]"
+            git push
+          else
+            echo "No changes to commit."
+          fi
