@@ -27,6 +27,17 @@ jobs:
             exit 1
           fi
 
+      - name: Guard against wrong WSGI entry (app:app)
+        run: |
+          set -e
+          # Fail CI if any repo file suggests using the wrong entry point `app:app`.
+          if grep -R "[^A-Za-z]app:app\b" -n . | grep -vE "flask_app\.egg-info|\.lock|\.png|\.jpg|\.jpeg|\.gif|\.svg"; then
+            echo "Found references to 'app:app'. Use 'wsgi:app' instead (our WSGI callable lives in wsgi.py)." >&2
+            exit 1
+          else
+            echo "No invalid 'app:app' references found."
+          fi
+
       - name: Set up uv
         uses: astral-sh/setup-uv@v4
         with:
