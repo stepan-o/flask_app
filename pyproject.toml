@@ -7,7 +7,6 @@ requires-python = ">=3.11"
 dependencies = [
     "flask>=3.0",
     "gunicorn>=22.0",
-    "load-dotenv>=0.1.0",
     "python-dotenv>=1.0",
 ]
 
@@ -28,6 +27,17 @@ serve-dev = "gunicorn --reload --bind 127.0.0.1:8000 wsgi:app"
 # Only include the actual application package; exclude the instance config directory
 include = ["app*"]
 exclude = ["instance*"]
+
+[tool.setuptools.package-data]
+# Ensure templates and static assets are included in source/wheel distributions
+app = [
+  "templates/**/*.html",
+  "static/**/*",
+]
+
+[tool.setuptools]
+# Include package data from the app package in built distributions
+include-package-data = true
 
 [tool.ruff]
 # Enforce rules against broad exception clauses and bare excepts.
