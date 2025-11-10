@@ -23,7 +23,7 @@ PY ?= python
 UV := uv
 
 .DEFAULT_GOAL := help
-.PHONY: help venv sync add run flask-run serve serve-dev routes shell check-venv where-flask pip-show clean env
+.PHONY: help venv sync add run flask-run serve serve-dev routes shell check-venv where-flask pip-show clean env hooks format format-check
 
 help: ## Show this help
 	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z0-9_.-]+:.*##/ {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -70,3 +70,13 @@ clean: ## Remove Python caches and common artifacts
 
 env: ## Create .env from .env.example if missing
 	@if [ ! -f .env ]; then cp .env.example .env && echo "Created .env from .env.example"; else echo ".env already exists"; fi
+
+hooks: ## Install local pre-commit hooks
+	uvx pre-commit install
+	uvx pre-commit install-hooks
+
+format: ## Auto-fix formatting/lint via pre-commit on all files
+	uvx pre-commit run --all-files || true
+
+format-check: ## Check formatting/lint (CI-like); fails if changes would be made
+	uvx pre-commit run --all-files --show-diff-on-failure
