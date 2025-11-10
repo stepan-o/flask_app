@@ -16,6 +16,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.uv]
+preview = true
 # uv will automatically use the local .venv and pyproject for dependency resolution
 
 [tool.uv.scripts]
